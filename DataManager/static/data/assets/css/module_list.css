@@ -1,0 +1,136 @@
+.delBtn{
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-family:  'Arial';
+    color: #FFFFFF;
+    display:block;
+    background:#3eb0f7;
+    text-align:center;
+    cursor:pointer;
+    float: right;
+    margin-top: 0px;
+}
+.delBtn:hover{
+    background-color: #1f96e0;
+}
+
+.addBtn{
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-family:  'Arial';
+    color: #FFFFFF;
+    display:block;
+    background:#3eb0f7;
+    margin:0 auto;
+    text-align:center;
+    cursor:pointer;
+    margin-top: 0px;
+    margin-right: 120px;
+}
+.addBtn:hover{
+    background-color: #1f96e0;
+}
+
+.tab-statistics{
+    width: 95%;
+    height: auto;
+    overflow: hidden;
+    margin-left: 30px;
+    margin-top: 40px;
+}
+.tab-content{
+    width: auto;
+    height: auto;
+    color: #A1A1A1;
+    margin-left: 20px;
+}
+.tab-content .tab-span{
+    display: inline-block;
+    padding: 0 15px;
+    width: 90px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #F2F2F2;
+    border-radius: 5px 5px 0 0;
+    color: #A1A1A1;
+    font-family: Arial;
+    margin-right: -2px;
+    cursor: pointer;
+}
+.tab-content .select{
+    background: #3eb0f7;
+    color: #FFFFFF;
+}
+.tab-content .select:hover{
+    background: #1f96e0;
+    color: #FFFFFF;
+}
+
+.table-statistics {
+    width: 100%;
+    height: auto;
+    line-height: 40px;
+    overflow: hidden;
+    margin-top: 0.5px;
+    margin-left: 10px;
+    color: #333333;
+    border: #666;
+    font-family: Arial;
+}
+.table-statistics th{
+    margin-left: 5px;
+    margin-right: 5px;
+    background: #F2F2F2;
+    text-align: left;
+}
+.table-statistics td{
+    margin-left: 5px;
+    margin-right: 5px;
+    text-align: left;
+    color: #222222;
+}
+.table-statistics tr:nth-child(2n+1){
+    background: #FBFBFB;
+}
+.table-statistics .td-red{
+    color: #FF0000;
+    font-weight: bold;
+}
+.table-statistics .td-green{
+    color: #009900;
+    font-weight: bold;
+}
+.table-statistics .td-gray{
+    color: #F2F2F2;
+    font-weight: bold;
+}
+.table-statistics .td-yellow{
+    color: #EEAD0E;
+    font-weight: bold;
+}
+.table-statistics .td-orange{
+    color: #FF8900;
+    font-weight: bold;
+}
+
+.btn-operate{
+    float: left;
+    border-radius: 0px;
+    border: 0px solid #dbdbdb;
+    background: #FFFFFF;
+    text-align: left;
+}
+    .btn-operate:hover{
+        background: #D0E1EC;color: #3498db;
+    }
+    .btn-operate:active{
+        background: #D0E1EC;color: #3498db;
+    }
+

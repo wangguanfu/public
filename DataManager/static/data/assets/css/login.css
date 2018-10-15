@@ -1,0 +1,125 @@
+body {
+    margin: 0;
+    background-repeat: no-repeat;
+    -moz-background-size: 100% 100%;
+    background-size: 100% 100%;
+}
+    .login-form{
+        width:450px;
+        height: 460px;
+        background: #FFFFFF;
+        border: 1px solid #E5E9EF;
+        border-radius: 8px;
+        margin-left:auto;
+        margin-right: auto;
+        padding-top:50px;
+        box-shadow: 0 0 25px #000000;
+    }
+    .logo-img{
+        width:100%;
+        height: 140px;
+        text-align: center;
+    }
+
+.form-header input{
+    position: relative;
+    margin:0 auto;
+    height: 40px;
+    border-radius:3px ;
+}
+
+.form-header .form-control{
+    position: relative;
+    margin:0 auto;
+    height: 40px;
+    border-radius:3px ;
+    padding: 2px 5px 2px 30px;
+}
+
+.form-header .form-group{
+    position: relative;
+    margin:0 auto;
+    margin-top:30px;
+    width:70%;
+    font-size: 40px;
+    border-radius:3px ;
+}
+.form-header .icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background-size: auto 15px;
+    margin: 6px 0 0 8px;
+    color:#777;
+    z-index: 100;
+}
+
+.form-header .login-button-div{
+    margin-top:30px;
+}
+.form-header .login-button{
+    display:block;
+    width:70%;
+    height:40px;
+    background:#3eb0f7;
+    border-radius:4px;
+    margin-top: 55px;
+    text-align:center;
+    line-height:40px;
+    color:#fff;
+    border: #FFFFFF;
+}
+.form-header .login-button:hover{
+    background-color: #1f96e0;
+}
+.form-header .login-btm-div{
+    width:70%;
+    margin:0 auto;
+    margin-top:20px;
+    font-family:'STHeitiSC-Light';
+    font-size:12px;
+    line-height:12px;
+}
+.form-header .save-pwd-btn{
+    font-family:'STHeitiSC-Light';
+    border:1px solid #56ACEE;
+    font-size: 12px;
+    height: 12px;
+    width: 20px;
+    margin-top: 0;
+}
+.form-header .fgt-pwd-btn{
+    color:#56ACEE;
+}
+.fl{
+    float:left;
+    height: 20px;
+    overflow: visible;
+}
+.fr{
+    float:right;
+}
+
+.res-dialog{
+	display: none;
+}
+    .res-dialog .confirm-btn{
+		width: 50%;
+		text-align: center;
+		margin-left: 100px;
+	}
+
+.succ-icon{
+	text-align:center;
+}
+    .succ-icon .icon-succ{
+	color:#94C050;
+	font-size: 40px;
+	}
+
+.confirm-btn-row{
+	margin-left: 250px;
+}
+

@@ -1,0 +1,127 @@
+{% extends "data/base.html" %}
+{% block title %}首页{% endblock %}
+{% load staticfiles %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'data/assets/css/admin.css' %}">
+<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css"/>
+
+<div class="admin">
+        <div class="admin-index">
+            <dl data-am-scrollspy="{animation: 'slide-right', delay: 100}">
+                <dt class="qs"><i class="am-icon-users"></i></dt>
+                <dd>{{ user_count }}</dd>
+                <dd class="f12"><a style="text-decoration: none">注册用户数</a></dd>
+            </dl>
+            <dl data-am-scrollspy="{animation: 'slide-right', delay: 300}">
+                <dt class="hs"><i class="am-icon-server"></i></dt>
+                <dd>{{ project_count }}</dd>
+                <dd class="f12"><a style="text-decoration: none">项目数</a></dd>
+            </dl>
+            <dl data-am-scrollspy="{animation: 'slide-right', delay: 600}">
+                <dt class="ls"><i class="am-icon-bug"></i></dt>
+                <dd>{{ td_count }}</dd>
+                <dd class="f12"><a style="text-decoration: none">事务数</a></dd>
+            </dl>
+            <dl data-am-scrollspy="{animation: 'slide-right', delay: 900}">
+                <dt class="cs"><i class="am-icon-area-chart"></i></dt>
+                <dd>{{ record_count }}</dd>
+                <dd class="f12"><a style="text-decoration: none">事务调用量</a></dd>
+            </dl>
+        </div>
+{#        <div class="btn-record btn-record-day" >近12天事务调用量</div>#}
+{#        <div class="btn-record btn-record-total">事务历史调用量</div>#}
+        <div class="charts-btn">
+            <button class="charts-type"><i class="iconfont icon-blue" onclick="charts('line')">&#xe628;</i></button>
+        </div>
+        <div class="charts-btn">
+            <button class="charts-type"><i class="iconfont icon-red" onclick="charts('column')">&#xe62a;</i></button>
+        </div>
+        <div id="container" style="height:80%;width: 94%;margin-right: 2%; margin-top: -3%;float: right"></div>
+
+    </div>
+    <meta charset="utf-8"><link rel="icon" href="https://static.jianshukeji.com/highcharts/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* css 代码  */
+    </style>
+    <script src="https://img.hcharts.cn/highcharts/highcharts.js"></script>
+    <script src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>
+    <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            charts('line')
+        })
+
+        function charts(type) {
+            var chart = Highcharts.chart('container',{
+                chart: {
+                    type: type
+                },
+                title: {
+                    text: '近12天事务调用量'
+                },
+                xAxis: {
+                    categories: get_date_xAxis(),
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '调用量 (个)'
+                    }
+                },
+                tooltip: {
+                    // head + 每个 point + footer 拼接成完整的 table
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y} 个</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: '事务调用量',
+                    data: {{ total.yDatas }}
+                }]
+            });
+        }
+
+        function get_date_xAxis() {
+            var data = [];
+            for (var i = 0; i < 12; i++) {
+                data[i] = getDay(i)
+            }
+            return data.reverse();
+        }
+
+        function getDay(day) {
+            var today = new Date();
+            var targetday_milliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day * -1;
+            today.setTime(targetday_milliseconds); //注意，这行是关键代码
+            var tYear = today.getFullYear();
+            var tMonth = today.getMonth();
+            var tDate = today.getDate();
+            tMonth = doHandleMonth(tMonth + 1);
+            tDate = doHandleMonth(tDate);
+            return tYear + "-" + tMonth + "-" + tDate;
+        }
+
+        function doHandleMonth(month) {
+            var m = month;
+            if (month.toString().length === 1) {
+                m = "0" + month;
+            }
+            return m;
+        }
+    </script>
+
+
+
+{% endblock %}

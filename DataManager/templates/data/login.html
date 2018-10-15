@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>登录</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load staticfiles %}
+    <!-- CSS Files -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+    <!-- Colors -->
+    <link href="{% static "/data/assets/css/common.css" %}" rel="stylesheet" media="screen">
+    <link href="{% static "/data/assets/css/login.css" %}" rel="stylesheet" media="screen">
+    <script src="{% static 'data/assets/js/md5.js' %}"></script>
+    <script src="{% static 'data/assets/js/dialog.js' %}"></script>
+    <link href="https://cdn.bootcss.com/bootstrap-validator/0.5.3/css/bootstrapValidator.css" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0 !important;
+            background: url({% static "data/assets/img/main_bg.jpg" %}) repeat !important;
+            -moz-background-size: 100% 100% !important;
+            background-size: 100% 100% !important;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="login-form">
+        <div class="logo-img"><img src="{% static "data/assets/img/logo-words.png" %}" width="130"
+                                   height="130"></div>
+        <form class="form-header" action="/qacenter/data/login/" role="form" method="POST" id="login_form">
+            <div class="form-group">
+                <i class="icon iconfont">&#xe61d;</i>
+                <input type="text" class="form-control" id="account" name="account" placeholder="请输入账号" value="">
+            </div>
+            <div class="form-group">
+                <i class="icon iconfont">&#xe610;</i>
+                <input type="password" class="form-control" type="password" id="password" name="password" placeholder="请输入密码" value=""/>
+            </div>
+            <div class="login-btm-div">
+                <span class="fl"><input type="checkbox" name="savePwd" class="save-pwd-btn"/> 记住密码</span>
+                <span class="fr"><a href="/qacenter/data/register" class="fgt-pwd-btn">注册</a></span>
+                <span class="fr">没有账号？</span>
+            </div>
+            <div class="login-button-div">
+                <input type="button" id="login" class="login-button" value="登录" onclick="login_ajax('#login_form')">
+{#                <input type="button" id="login" class="login-button" value="登录">#}
+            </div>
+        </form>
+    </div>
+
+    <div id="td-res-dialog" class="td-res-dialog res-dialog">
+        <div class="succ-icon"><i class="iconfont icon-succ">&#xe635;</i></div>
+        <div id="Canvas" class="Canvas"></div>
+        <div class="confirm-btn-row"><a id="J_dialog_del" class="confirm-btn btn" onclick="location.reload()">确定 (3s)</a></div>
+    </div>
+
+<!-- /.javascript files -->
+<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery.serializeJSON/2.9.0/jquery.serializejson.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('login-form').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                account: {
+                    message: '用户名验证失败',
+                    validators: {
+                        notEmpty: {
+                            message: '用户名不能为空'
+                        }
+                    }
+                },
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        var localStorage = window.localStorage;
+        if (localStorage.getItem("QACENTER_USER")) {
+            $("#account").val(localStorage.getItem("QACENTER_USER"));
+        }
+        if (localStorage.getItem("QACENTER_PWD")) {
+            $(".save-pwd-btn").attr("checked", true);
+            $("#password").val(localStorage.getItem("QACENTER_PWD"));
+        } else {
+            $(".save-pwd-btn").attr("checked", false);
+        }
+    }).on('click', '#login', function() {
+        var user = $("input[name='account']").val();
+        var password = $("input[name='password']").val();
+        var isSave = $("input[name='savePwd']").is(':checked');
+        {#$("#password").val(hex_md5($("#password").val()));#}
+        if (isSave) {
+            localStorage.setItem("QACENTER_USER", user);
+            localStorage.setItem("QACENTER_PWD", password);
+        } else {
+            localStorage.removeItem("QACENTER_PWD");
+        }
+    })
+
+
+    /*表单信息异步传输*/
+    function login_ajax(id) {
+            {#var data = $(id).serializeJSON();#}
+            var data = {
+                'account': $("input[name='account']").val(),
+                'password': hex_md5($("input[name='password']").val())
+            }
+            var url;
+            if (id === "#login_form") {
+                url = '/qacenter/data/login/';
+            }
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: function (data) {
+                    if (data.indexOf('登录成功') !== -1) {
+                        window.location.href = '/qacenter/data/index/';
+                    } else {
+                        myAlertFail(data);
+                    }
+                },
+                error: function () {
+                    myAlertFail('Sorry，服务器可能开小差啦, 请重试!')
+                }
+            });
+    }
+
+
+/*提示 弹出*/
+function myAlertFail(data) {
+    dialog.init({
+        dialogId: 'myAlert',
+        msg: data,
+        type: 4
+    });
+    var t=setTimeout(next,2000);
+    function next()
+    {
+        dialog.hide();
+        window.location.reload();
+    }
+}
+</script>
+
+</body>
+</html>

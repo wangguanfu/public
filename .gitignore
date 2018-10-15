@@ -1,0 +1,7 @@
+build/
+.idea/*
+*.pyc
+*.pyo
+logs/*
+*.log
+*.temp
